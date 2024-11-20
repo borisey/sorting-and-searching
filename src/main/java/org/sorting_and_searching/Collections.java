@@ -2,35 +2,46 @@ package org.sorting_and_searching;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.RandomAccess;
 
 public class Collections {
 
     // 1
-//    static int binarySearch(List> list, T key) {
-//
-//    }
+    public static <T extends Comparable<T>> int binarySearch(List<T> list, T key) {
+        int low = 0;
+        int high = list.size()-1;
 
-    static <T> int binarySearch(List<? extends Comparable<? super T>> list, T key) {
-        if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
-            return java.util.Collections.indexedBinarySearch(list, key);
-        else
-            return java.util.Collections.iteratorBinarySearch(list, key);
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            T midVal = list.get(mid);
+            int cmp = midVal.compareTo(key);
+
+            if (cmp < 0)
+                low = mid + 1;
+            else if (cmp > 0)
+                high = mid - 1;
+            else
+                return mid;
+        }
+        return -(low + 1);
     }
 
     // 2
-//    static int binarySearch(List list, T key, Comparator c) {
-//
-//    }
+    public static <T> int binarySearch(List<T> list, T key, Comparator c) {
+        int low = 0;
+        int high = list.size()-1;
 
-    static <T> int binarySearch(List<? extends T> list, T key, Comparator<? super T> c) {
-        if (c==null)
-            return binarySearch((List<? extends Comparable<? super T>>) list, key);
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            T midVal = list.get(mid);
+            int cmp = c.compare(midVal, key);
 
-        if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
-            return java.util.Collections.indexedBinarySearch(list, key, c);
-        else
-            return java.util.Collections.iteratorBinarySearch(list, key, c);
+            if (cmp < 0)
+                low = mid + 1;
+            else if (cmp > 0)
+                high = mid - 1;
+            else
+                return mid; // key found
+        }
+        return -(low + 1);
     }
-
 }
