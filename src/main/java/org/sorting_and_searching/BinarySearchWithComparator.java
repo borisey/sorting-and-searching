@@ -6,10 +6,8 @@ import java.util.List;
 public class BinarySearchWithComparator {
 
     public static void main(String[] args) {
-        List<Person> people = new ArrayList<>();
-        people.add(new Person("Alice", 30));
-        people.add(new Person("Charlie", 35));
-        people.add(new Person("Bob", 25));
+        List<Person> people = getPersons();
+
         // Сортировка списка по имени
         Collections.sort(people, new NameComparator());
         // Объект для поиска
@@ -22,5 +20,14 @@ public class BinarySearchWithComparator {
         } else {
             System.out.println("Person not found");
         }
+    }
+
+    private static List<Person> getPersons() {
+        List<Person> people = new ArrayList<>();
+        people.add(new Person("Alice", 30));
+        people.add(new Person("Charlie", 35));
+        people.add(new Person("Bob", 25));
+
+        return people;
     }
 }
