@@ -44,4 +44,8 @@ public class Collections {
         }
         return -(low + 1);
     }
+
+    public static <T> void sort(List<T> list, Comparator<? super T> c) {
+        list.sort(c);
+    }
 }
